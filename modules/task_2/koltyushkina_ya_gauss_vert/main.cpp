@@ -1,11 +1,11 @@
 // Copyright 2019 Koltyushkina Yanina
 #include <gtest-mpi-listener.hpp>
 #include <gtest/gtest.h>
-#include <string>
+#include <vector>
 #include "../../../modules/task_2/koltyushkina_ya_gauss_vert/gauss_vert.h"
 
 TEST(Gauss_vert, correct_size) {
-	std::vector<double> mtr;
+  std::vector<double> mtr;
 	ASSERT_ANY_THROW(mtr = RandomMatrix(-1));
 }
 
@@ -20,7 +20,7 @@ TEST(Gauss_vert, correct_gausspr) {
 
   std::vector<double> mtr = {1, 2, 2, 2, 0, 1};
 	std::vector<double> res = PrGauss(mtr, 2);
-  std::vector<double> prov = { 2, 0, 2, 1, 1, -0.5 };
+ std::vector<double> prov = { 2, 0, 2, 1, 1, -0.5 };
 
 	if (rank == 0) {
 		ASSERT_EQ(res, prov);
@@ -33,7 +33,7 @@ TEST(Gauss_vert, correct_all) {
 
   std::vector<double> mtr = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2 };
   std::vector<double> dres(3);
-  All(mtr, 3, dres);
+  dres = All(mtr, 3);
   std::vector<double> prov = { 2, 2, 2 };
 
   if (rank == 0) {
@@ -73,7 +73,7 @@ TEST(Gauss_vert, correct_all1) {
 
   std::vector<double> mtr = { 2, 0, 0, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 2, 1, 1, 3, 1, 2, 1 };
   std::vector<double> dres(4);
-  All(mtr, 4, dres);
+  dres = All(mtr, 4);
   std::vector<double> prov = { 1.25, -2, 0.5, 1 };
 
   if (rank == 0) {
@@ -87,8 +87,8 @@ TEST(Gauss_vert, correct_gaussobr) {
 
   std::vector<double> mtr = { 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 2 };
   std::vector<double> dres(3);
-  
-  ObrGauss(mtr, 3, dres);
+
+  dres = ObrGauss(mtr, 3);
 
   std::vector<double> prov = { 2, 2, 2};
 
@@ -103,8 +103,7 @@ TEST(Gauss_vert, correct_gaussobr2) {
 
   std::vector<double> mtr = { 2, 0, 0, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 2, 1, 1, 3, 1, 2, 1 };
   std::vector<double> dres(4);
- 
-  ObrGauss(mtr, 4, dres);
+  dres =  ObrGauss(mtr, 4);
 
   std::vector<double> prov = { 1.25, -2, 0.5, 1 };
 
@@ -125,7 +124,7 @@ int main(int argc, char** argv) {
 	listeners.Release(listeners.default_xml_generator());
 
 	listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
-  
+
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
