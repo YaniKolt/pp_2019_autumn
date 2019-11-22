@@ -17,11 +17,11 @@ std::vector <double> RandomMatrix(int _size) {
 }
 
 int maxind(int it, int _size, std::vector <double> mtr) {
-  double max = abs(mtr[it*_size + it]);
+  double max = std::abs(mtr[it*_size + it]);
   int in = it;
   for (int i = it; i < _size; i++) {
-    if (abs(mtr[it*_size + i]) > max) {
-      max = abs(mtr[it*_size + i]);
+    if (std::abs(mtr[it*_size + i]) > max) {
+      max = std::abs(mtr[it*_size + i]);
       in = i;
     }
   }
