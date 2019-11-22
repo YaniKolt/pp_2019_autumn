@@ -6,25 +6,25 @@
 
 TEST(Gauss_vert, correct_size) {
   std::vector<double> mtr;
-	ASSERT_ANY_THROW(mtr = RandomMatrix(-1));
+  ASSERT_ANY_THROW(mtr = RandomMatrix(-1));
 }
 
 TEST(Gauss_vert, create_matrix) {
   std::vector<double> mtr;
-	ASSERT_NO_THROW(mtr = RandomMatrix(7));
+  ASSERT_NO_THROW(mtr = RandomMatrix(7));
 }
 
 TEST(Gauss_vert, correct_gausspr) {
-	int rank;
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  int rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-  std::vector<double> mtr = {1, 2, 2, 2, 0, 1};
-	std::vector<double> res = PrGauss(mtr, 2);
- std::vector<double> prov = { 2, 0, 2, 1, 1, -0.5 };
+  std::vector<double> mtr = { 1, 2, 2, 2, 0, 1 };
+  std::vector<double> res = PrGauss(mtr, 2);
+  std::vector<double> prov = { 2, 0, 2, 1, 1, -0.5 };
 
-	if (rank == 0) {
-		ASSERT_EQ(res, prov);
-	}
+  if (rank == 0) {
+    ASSERT_EQ(res, prov);
+  }
 }
 
 TEST(Gauss_vert, correct_all) {
@@ -90,7 +90,7 @@ TEST(Gauss_vert, correct_gaussobr) {
 
   dres = ObrGauss(mtr, 3);
 
-  std::vector<double> prov = { 2, 2, 2};
+  std::vector<double> prov = { 2, 2, 2 };
 
   if (rank == 0) {
     ASSERT_EQ(dres, prov);
@@ -103,7 +103,7 @@ TEST(Gauss_vert, correct_gaussobr2) {
 
   std::vector<double> mtr = { 2, 0, 0, 0, 1, 1, 0, 0, 1, 2, 2, 0, 2, 2, 1, 1, 3, 1, 2, 1 };
   std::vector<double> dres(4);
-  dres =  ObrGauss(mtr, 4);
+  dres = ObrGauss(mtr, 4);
 
   std::vector<double> prov = { 1.25, -2, 0.5, 1 };
 
@@ -113,20 +113,20 @@ TEST(Gauss_vert, correct_gaussobr2) {
 }
 
 int main(int argc, char** argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	MPI_Init(&argc, &argv);
+  ::testing::InitGoogleTest(&argc, argv);
+  MPI_Init(&argc, &argv);
 
-	::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);
-	::testing::TestEventListeners& listeners =
-		::testing::UnitTest::GetInstance()->listeners();
+  ::testing::AddGlobalTestEnvironment(new GTestMPIListener::MPIEnvironment);
+  ::testing::TestEventListeners& listeners =
+    ::testing::UnitTest::GetInstance()->listeners();
 
-	listeners.Release(listeners.default_result_printer());
-	listeners.Release(listeners.default_xml_generator());
+  listeners.Release(listeners.default_result_printer());
+  listeners.Release(listeners.default_xml_generator());
 
-	listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
+  listeners.Append(new GTestMPIListener::MPIMinimalistPrinter);
 
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-	return RUN_ALL_TESTS();
+  return RUN_ALL_TESTS();
 }

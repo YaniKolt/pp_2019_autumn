@@ -1,17 +1,15 @@
 // Copyright 2019 Koltyushkina Yanina
+#include "../../../modules/task_2/koltyushkina_ya_gauss_vert/gauss_vert.h"
 #include <mpi.h>
-#include <vector>
 #include <cmath>
 #include <random>
-#include <iostream>
-#include <stdlib.h>
-#include "../../../modules/task_2/koltyushkina_ya_gauss_vert/gauss_vert.h"
+#include <vector>
 
 std::vector <double> RandomMatrix(int _size) {
   std::mt19937 seed;
   if (_size <= 0)
     throw "Zero or negative size";
-  std::vector <double> mtr(_size*(_size+1));
+  std::vector <double> mtr(_size*(_size + 1));
   for (int i = 0; i < _size*(_size + 1); i++) {
     mtr[i] = seed();
   }
@@ -31,11 +29,11 @@ int maxind(int it, int _size, std::vector <double> mtr) {
 }
 
 std::vector<double> PrGauss(std::vector<double> mtr, int _size) {
-	int size, rank;
-	MPI_Comm_size(MPI_COMM_WORLD, &size);
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  int size, rank;
+  MPI_Comm_size(MPI_COMM_WORLD, &size);
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   int segm = (_size + 1) / size;
-  int ost = (_size+1) % size;
+  int ost = (_size + 1) % size;
 
   std::vector <double> maskoef(_size);
   std::vector <double> tmpmaskoef(_size, 1);
@@ -48,7 +46,7 @@ std::vector<double> PrGauss(std::vector<double> mtr, int _size) {
   std::vector <double> tmp(_size + 1);
   int f = 1;
   int krch;
-  for (int it = 0; it < _size-1; it++) {
+  for (int it = 0; it < _size - 1; it++) {
     maxin = maxind(it, _size, mtr);
     for (int i = 0; i < _size + 1; i++) {
       tmp[i] = mtr[i*_size + it];
@@ -79,7 +77,7 @@ std::vector<double> PrGauss(std::vector<double> mtr, int _size) {
         for (int k = 1; k < size; k++) {
           MPI_Recv(&mtr[(i*size + k)*_size + it + 1], _size - it - 1, MPI_DOUBLE, k, 9, MPI_COMM_WORLD, &status);
         }
-      }      
+      }
       for (int i = 0; i < ost; i++) {
         for (int j = it + 1; j < _size; j++) {
           mtr[(segm*size + i)*_size + j] -= maskoef[j] * mtr[(segm*size + i)*_size + it];
@@ -98,7 +96,7 @@ std::vector<double> PrGauss(std::vector<double> mtr, int _size) {
     }
   }
   return mtr;
-}   
+}
 bool NullStr(std::vector<double> mtr, int str, int _size) {
   for (int i = str; i < _size; i++)
     if (mtr[i*_size + str] != 0)
@@ -110,7 +108,7 @@ int Proverka(std::vector<double> mtr, int _size) {
   for (int i = 0; i < _size; i++) {
     if (NullStr(mtr, i, _size) == 1) {
       if (mtr[(_size + 1)*_size + i] == 0)
-       return i;
+        return i;
       if (mtr[(_size + 1)*_size + i] != 0)
         throw "There are no solutions";
     }
@@ -137,10 +135,10 @@ std::vector<double> ObrGauss(std::vector<double> mtr, int _size) {
     for (int i = _size - 1; i > 0; i--) {
       fk == 0;
       if ((rank != 0) && (i < segm*size) && (rank == i % size)) {
-        MPI_Send(&mtr[_size*_size+i], 1, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
+        MPI_Send(&mtr[_size*_size + i], 1, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
       }
 
-      if ((i%size != 0)&&(i < segm*size) && (rank == 0)) {
+      if ((i%size != 0) && (i < segm*size) && (rank == 0)) {
         MPI_Recv(&b[i], 1, MPI_DOUBLE, i%size, i, MPI_COMM_WORLD, &status);
         fk = 1;
       }
@@ -164,7 +162,7 @@ std::vector<double> ObrGauss(std::vector<double> mtr, int _size) {
       }
     }
     if (rank == 0) {
-      dres[0] = mtr[_size * _size + 0] / mtr[_size*0 + 0];
+      dres[0] = mtr[_size * _size + 0] / mtr[_size * 0 + 0];
     }
   }
   return dres;

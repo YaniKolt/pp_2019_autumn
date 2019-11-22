@@ -6,7 +6,6 @@
 #include <vector>
 
 std::vector <double> RandomMatrix(int _size);
-//void swop(int it, int max, int _size, std::vector <double>& mtr);
 int maxind(int it, int _size, std::vector <double> mtr);
 std::vector<double> PrGauss(std::vector<double> mtr, int _size);
 std::vector<double> ObrGauss(std::vector<double> mtr, int _size);
