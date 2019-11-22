@@ -133,7 +133,7 @@ std::vector<double> ObrGauss(std::vector<double> mtr, int _size) {
     int fk = 0;
     double koef;
     for (int i = _size - 1; i > 0; i--) {
-      fk == 0;
+      fk = 0;
       if ((rank != 0) && (i < segm*size) && (rank == i % size)) {
         MPI_Send(&mtr[_size*_size + i], 1, MPI_DOUBLE, 0, i, MPI_COMM_WORLD);
       }
@@ -149,9 +149,7 @@ std::vector<double> ObrGauss(std::vector<double> mtr, int _size) {
         dres[i] = b[i] / mtr[_size*i + i];
         koef = dres[i];
       }
-      MPI_Barrier;
       MPI_Bcast(&koef, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
-      MPI_Barrier;
       for (int s = 0; s < segm; s++) {
         mtr[_size*_size + s * size + rank] -= koef * mtr[i*_size + s * size + rank];
       }

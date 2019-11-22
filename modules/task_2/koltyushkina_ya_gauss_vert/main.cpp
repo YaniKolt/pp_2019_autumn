@@ -80,7 +80,6 @@ TEST(Gauss_vert, correct_all1) {
     ASSERT_EQ(dres, prov);
   }
 }
-
 TEST(Gauss_vert, correct_gaussobr) {
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
@@ -91,6 +90,21 @@ TEST(Gauss_vert, correct_gaussobr) {
   dres = ObrGauss(mtr, 3);
 
   std::vector<double> prov = { 2, 2, 2 };
+
+  if (rank == 0) {
+    ASSERT_EQ(dres, prov);
+  }
+}
+TEST(Gauss_vert, correct_gaussobr1) {
+  int rank;
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+  std::vector<double> mtr = { 1, 0, 0, 0, 0, 2, 0, 0, 0, 1, 4, 0, 1, 1, 2, 1, 2, 2, 2, 2 };
+  std::vector<double> dres(4);
+
+  dres = ObrGauss(mtr, 4);
+
+  std::vector<double> prov = { 0, 0.25, -0.5, 2 };
 
   if (rank == 0) {
     ASSERT_EQ(dres, prov);
