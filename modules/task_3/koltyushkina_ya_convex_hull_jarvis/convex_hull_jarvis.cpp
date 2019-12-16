@@ -186,11 +186,9 @@ double** ConvexHull(double** arr, const int nump) {
         smind = 2;
         while (fi[smind] == fi[smind + 1]) {
           smind += 1;
-
         }
       }
       ind = smind;
-
     }
 
     MPI_Bcast(&ind, 1, MPI_INT, 0, MPI_COMM_WORLD);
@@ -259,7 +257,6 @@ double** ConvexHull(double** arr, const int nump) {
           delta = (pcount - minind - 1) / size;
           ost = (pcount - minind - 1) % size;
           ind = minind;
-
         }
       }
       result[0][0] = sizeres;
@@ -295,14 +292,16 @@ double** ConvexHull(double** arr, const int nump) {
         int endlockind;
         if (ind + delta + ost + 1 > nump) {
           endlockind = nump;
-        } else endlockind = ind + delta + ost + 1;
-        for (int j = ind + 1; j < endlockind; j++) {
-          nowcos = cosvec(last, beforelast, arr[j]);
-          if ((nowcos <= mincos) && (nowcos != cos0)) {
-            mincos = nowcos;
-            minind = j;
-          }
-        }
+        } else {
+		  endlockind = ind + delta + ost + 1;
+          for (int j = ind + 1; j < endlockind; j++) {
+            nowcos = cosvec(last, beforelast, arr[j]);
+            if ((nowcos <= mincos) && (nowcos != cos0)) {
+              mincos = nowcos;
+              minind = j;
+               }
+            }
+	    }
       } else {
         if (f == 0) {
           lockind = ind + delta * rank + ost + 1;
@@ -317,7 +316,6 @@ double** ConvexHull(double** arr, const int nump) {
               }
             }
           }
-
         }
       }
 
@@ -342,7 +340,6 @@ double** ConvexHull(double** arr, const int nump) {
       nowres[sizeres] = arr[minind];
       delta = (pcount - minind - 1) / size;
       ost = (pcount - minind - 1) % size;
-
     }
     if (rank == 0) {
       int flag = 0;
@@ -372,7 +369,6 @@ double** ConvexHull(double** arr, const int nump) {
           delta = (pcount - minind - 1) / size;
           ost = (pcount - minind - 1) % size;
           ind = minind;
-
         }
       }
       result[0][0] = sizeres;
