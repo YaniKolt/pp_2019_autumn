@@ -37,14 +37,14 @@ TEST(Convex_Hull_Jarvis_mpi, test_triangle_point) {
   double** mas = new double*[4];
   for (int i = 0; i < 4; i++)
     mas[i] = new double[2];
-    mas[0][0] = 0;
-   mas[0][1] = 0;
-   mas[1][0] = 2;
-   mas[1][1] = 0;
-   mas[2][0] = 2;
-   mas[2][1] = 1;
-   mas[3][0] = 2;
-   mas[3][1] = 2;
+  mas[0][0] = 0;
+  mas[0][1] = 0;
+  mas[1][0] = 2;
+  mas[1][1] = 0;
+  mas[2][0] = 2;
+  mas[2][1] = 1;
+  mas[3][0] = 2;
+  mas[3][1] = 2;
 
   double** result = new double*[5];
   double** myres = new double*[5];
@@ -64,8 +64,8 @@ TEST(Convex_Hull_Jarvis_mpi, test_triangle_point) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   if (rank == 0) {
-    int s = (int)result[0][0];
-    for (int i = 1; i < s+1; i++) {
+    int s = static_cast<int>(result[0][0]);
+    for (int i = 1; i < s + 1; i++) {
       for (int j = 0; j < 2; j++) {
         EXPECT_EQ(myres[i][j], result[i][j]);
       }
@@ -73,7 +73,7 @@ TEST(Convex_Hull_Jarvis_mpi, test_triangle_point) {
   }
 }
 
-TEST(Convex_Hull_Jarvis_mpi, test_triangle_points){
+TEST(Convex_Hull_Jarvis_mpi, test_triangle_points) {
   double** mas = new double*[6];
   for (int i = 0; i < 6; i++)
     mas[i] = new double[2];
@@ -108,7 +108,7 @@ TEST(Convex_Hull_Jarvis_mpi, test_triangle_points){
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   if (rank == 0) {
-    int s = (int)result[0][0];
+    int s = static_cast<int>(result[0][0]);
     for (int i = 1; i < s + 1; i++) {
       for (int j = 0; j < 2; j++) {
         EXPECT_EQ(myres[i][j], result[i][j]);
@@ -154,7 +154,7 @@ TEST(Convex_Hull_Jarvis_mpi, test_square_points) {
   int rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
   if (rank == 0) {
-    int s =(int) result[0][0];
+    int s = static_cast<int>(result[0][0]);
     for (int i = 1; i < s + 1; i++) {
       for (int j = 0; j < 2; j++) {
         EXPECT_EQ(myres[i][j], result[i][j]);
@@ -163,7 +163,7 @@ TEST(Convex_Hull_Jarvis_mpi, test_square_points) {
   }
 }
 
-TEST(Convex_Hull_Jarvis_mpi, test_straight) { //прямая 
+TEST(Convex_Hull_Jarvis_mpi, test_straight) {
   double** mas = new double*[10];
   for (int i = 0; i < 10; i++)
     mas[i] = new double[2];
@@ -189,7 +189,7 @@ TEST(Convex_Hull_Jarvis_mpi, test_straight) { //прямая
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   if (rank == 0) {
-    int s = (int)result[0][0];
+    int s = static_cast<int>(result[0][0]);
     for (int i = 1; i < s + 1; i++) {
       for (int j = 0; j < 2; j++) {
         EXPECT_EQ(myres[i][j], result[i][j]);
@@ -228,7 +228,7 @@ TEST(Convex_Hull_Jarvis_mpi, test_straight_point) {
   MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
   if (rank == 0) {
-    int s =(int) result[0][0];
+    int s = static_cast<int>(result[0][0]);
     for (int i = 1; i < s + 1; i++) {
       for (int j = 0; j < 2; j++) {
         EXPECT_EQ(myres[i][j], result[i][j]);
