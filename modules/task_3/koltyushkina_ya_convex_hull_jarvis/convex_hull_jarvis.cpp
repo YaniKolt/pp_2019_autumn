@@ -225,10 +225,6 @@ double** ConvexHull(double** arr, const int nump) {
       nowres[2] = arr[ind];
       nowres[0][0] = 2;
       delta = (pcount - ind - 1);
-      double* arrmincos = new double[size];
-      int* arrminind = new int[size];
-      double* last = new double[2];
-      double* beforelast = new double[2];
       int sizeres = 2;
       int flag = 0;
       while (flag != 1) {
