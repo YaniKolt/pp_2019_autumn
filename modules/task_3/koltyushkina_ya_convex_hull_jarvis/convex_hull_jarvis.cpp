@@ -308,8 +308,7 @@ double** ConvexHull(double** arr, const int nump) {
           for (int j = lockind; j < lockind + delta; j++) {
             if (j == lockind) {
               mincos = cosvec(last, beforelast, arr[j]);
-            }
-            else {
+            } else {
               nowcos = cosvec(last, beforelast, arr[j]);
               if ((nowcos <= mincos) && (nowcos != cos0)) {
                 mincos = nowcos;
