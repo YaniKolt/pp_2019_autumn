@@ -293,22 +293,23 @@ double** ConvexHull(double** arr, const int nump) {
         if (ind + delta + ost + 1 > nump) {
           endlockind = nump;
         } else {
-		  endlockind = ind + delta + ost + 1;
+          endlockind = ind + delta + ost + 1;
           for (int j = ind + 1; j < endlockind; j++) {
             nowcos = cosvec(last, beforelast, arr[j]);
             if ((nowcos <= mincos) && (nowcos != cos0)) {
               mincos = nowcos;
               minind = j;
-               }
             }
-	    }
+          }
+        }
       } else {
         if (f == 0) {
           lockind = ind + delta * rank + ost + 1;
           for (int j = lockind; j < lockind + delta; j++) {
             if (j == lockind) {
               mincos = cosvec(last, beforelast, arr[j]);
-            } else {
+            }
+            else {
               nowcos = cosvec(last, beforelast, arr[j]);
               if ((nowcos <= mincos) && (nowcos != cos0)) {
                 mincos = nowcos;
