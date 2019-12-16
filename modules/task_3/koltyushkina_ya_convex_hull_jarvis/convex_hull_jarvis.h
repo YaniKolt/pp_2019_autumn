@@ -13,4 +13,4 @@ double** QuickSort(double** arr, int first, int last, double* fi, double* r);
 double cosvec(double* p1, double* p2, double* p3);
 double** ConvexHull(double** arr, const int nump);
 
-#endif  // MODULES_TASK_3_KOLTYUSHKINA_ YA_CONVEX_HULL_JARVIS_CONVEX_HULL_JARVIS_H_
+#endif  // MODULES_TASK_3_KOLTYUSHKINA_YA_CONVEX_HULL_JARVIS_CONVEX_HULL_JARVIS_H_
